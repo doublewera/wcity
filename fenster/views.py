@@ -9,6 +9,7 @@ def index(request):
     context = {
         "window_height": 100,
         "window_width": 50,
+        "fenstertypes": [True, True, False, None, ""],
     }
     return HttpResponse(template.render(context))
 
