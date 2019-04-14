@@ -6,5 +6,9 @@ from django.template import loader
 
 def index(request):
     template = loader.get_template('fenster/index.html')
-    return HttpResponse(template.render())
+    context = {
+        "window_height": 100,
+        "window_width": 50,
+    }
+    return HttpResponse(template.render(context))
 
