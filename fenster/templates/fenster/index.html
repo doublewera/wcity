@@ -1,14 +1,29 @@
 <h1>Das Fenster</h1>
 
-{% for countryside in fenstertypes %}
+<form action="{% url 'buy' %}" method="post">
+{% csrf_token %}
+{{request_place}}
+{{an_exception}}
+<h2>Всего: {{fenster_list.count}}</h2>
+{% for afenster in fenster_list %}
     <table border="6">
-    {% if countryside %}
         <tr height="50px">
             <td colspan="2">
-                {{how_many_fenster}}
+                Ширина:{{afenster.fenster_width}}<br />
+                Высота:{{afenster.fenster_height}}<br />
+                Схема:{{afenster.fenster_scheme}}<br />
+                <input
+                    type="radio"
+                    name="selected_fenster"
+                    id="fenster{{afenster.id}}"
+                    value={{afenster.id}}
+                    checked="checked"
+                    />
+                <label for=fenster{{afenster.id}}>
+                    fenster №{{afenster.id}}
+                </label>
             </td>
         </tr>
-    {% endif %}
         <tr height="{{window_height}}px">
             <td width="50px">
                 &nbsp;
@@ -19,3 +34,5 @@
         </tr>
     </table>
 {% endfor %}
+<input type="submit" value="Buy">
+</form>
