@@ -11,6 +11,11 @@ class Fenster(models.Model):
         default='1,2',
         max_length=1024
     )
+    fenster_price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=1
+    )
     window_view = models.CharField(default='', max_length=1024)
 
 class Apt(models.Model):
