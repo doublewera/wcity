@@ -16,6 +16,7 @@ class Fenster(models.Model):
         decimal_places=2,
         default=1
     )
+    for_rent = models.BooleanField(default=True)
     window_view = models.CharField(default='', max_length=1024)
 
 class Apt(models.Model):

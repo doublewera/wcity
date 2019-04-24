@@ -1,38 +1,49 @@
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
+from django.core.mail import send_mail
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
-
 from .models import Fenster
-from random import randint
+from .pss import yapass
+
+def add(request):
+    if request.method == "POST":
+        f = Fenster(
+            fenster_width=request.POST["fenster_width"],
+            fenster_height=request.POST["fenster_height"],
+            fenster_scheme=request.POST["fenster_scheme"],
+            fenster_price=request.POST["fenster_price"]
+        )
+        f.save()
+        return HttpResponseRedirect("/fenster")
+    return render(request, 'fenster/add.html')
+
 
 def index(request):
-    #test_creation()
-    context = {
-        "request_place": str(request)
-    }
-    try:
-        if 'selected_fenster' in request.POST:
-            fenster_id = request.POST['selected_fenster']
-            return buy(request, fenster_id)
-        context["request_place"] += str(request.POST)
-    except Exception as e:
-        context["an_exception"] = str(e) + str(type(e))
-    return display_all(request, context)
-
-def buy(request, fenster_id):
-    all_fensters = Fenster.objects
-    Fenster.objects.filter(id=fenster_id).delete()
     return display_all(request)
 
+
+def buy(request):
+    if request.method == "POST":
+        if 'selected_fenster' in request.POST:
+            f = Fenster.objects.get(
+                pk=request.POST['selected_fenster']
+            )
+            f.for_rent=False
+            f.save()
+            send_mail(
+                subject='Fenster was sold',
+                message='Fenster #%i was sold.' % f.id,
+                from_email='alisawera@yandex.ru',
+                recipient_list=['alisawera@gmail.com'],
+                auth_user="alisawera",
+                auth_password=yapass
+            )
+
+    return HttpResponseRedirect("/fenster")  # relative to 127.0.0.1
+
+
 def display_all(request, context={}):
-    fenster_list = Fenster.objects.order_by("id")
+    fenster_list = Fenster.objects.filter(for_rent=True).order_by("id")
     context["fenster_list"] = fenster_list
     return render(request, 'fenster/index.html', context)
-
-def test_creation():
-# Create a new Fenster.
-    f = Fenster(
-        fenster_width=randint(100,256),
-        window_view=''
-    )
-    f.save()
 

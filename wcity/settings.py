@@ -78,12 +78,14 @@ from pgpass_helper import read_pgpass
 
 DATABASES = {
     'default': read_pgpass('wcity'),
-    # 'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # }
 }
 
+# Email
+# https://docs.djangoproject.com/en/2.2/topics/email/
+
+EMAIL_PORT = 465
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_USE_SSL = True
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators

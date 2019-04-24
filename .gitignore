@@ -2,3 +2,5 @@ __pycache__
 *.pyc
 *.osm
 migrations
+*.jpg
+*.svg
