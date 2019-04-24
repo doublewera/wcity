@@ -18,7 +18,8 @@ from django.urls import include
 from django.urls import path
 
 urlpatterns = [
-    path('fenster/', include('fenster.urls')),
+    path('admin/doc/', include('django.contrib.admindocs.urls')),
     path('admin/', admin.site.urls),
+    path('fenster/', include('fenster.urls')),
 ]
 
