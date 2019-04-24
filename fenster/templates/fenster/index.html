@@ -1,4 +1,4 @@
-<h1>Das Fenster</h1>
+{% load static %}
 
 <form action="{% url 'buy' %}" method="post">
 {% csrf_token %}
@@ -22,6 +22,11 @@
                 <label for=fenster{{afenster.id}}>
                     fenster №{{afenster.id}}
                 </label>
+                <img
+                    src="{% static 'fenster/pano/city.jpg'%}"
+                    alt="city"
+                    style="width:100px"
+                />
             </td>
         </tr>
         <tr height="{{window_height}}px">
