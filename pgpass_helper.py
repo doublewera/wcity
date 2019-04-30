@@ -13,7 +13,7 @@ def read_pgpass(dbname):
         home_folder = os.path.expanduser('~')
         pgpass = os.path.join(home_folder, '.pgpass')
         pgpass_lines = open(pgpass).read().split()
-    except IOError:
+    except IOError as ioe:
         print(
             """
             You don't have a ~/.pgpass file so we're using a sqlite database.
@@ -22,6 +22,7 @@ def read_pgpass(dbname):
             See http://www.postgresql.org/docs/9.3/static/libpq-pgpass.html
             """
             )
+        print(ioe)
     else:
         for match in (dbname, '*'):
             for line in pgpass_lines:

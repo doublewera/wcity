@@ -4,3 +4,7 @@ __pycache__
 migrations
 *.jpg
 *.svg
+pss.py
+secretkey.py
+static/admin/
+static/fenster/
